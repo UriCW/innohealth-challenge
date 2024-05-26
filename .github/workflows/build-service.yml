@@ -32,5 +32,6 @@ jobs:
       - name: Build docker container
         run: |
           DOCKER_IMAGE="${ARTIFACT}:${ github.sha }"
+          echo "Tagging with ${DOCKER_IMAGE}"
           docker build -t "${ DOCKER_IMAGE }" "./apps/patient_service/"
           docker push "${ DOCKER_IMAGE }" "./apps/patient_service/"
