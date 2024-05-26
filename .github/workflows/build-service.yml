@@ -23,7 +23,7 @@ jobs:
 
       - name: Debug
         run: |
-          echo 'Debug hints: access_token
+          echo 'Debug hints: access_token'
           echo '${{ steps.auth.outputs.access_token }}'
           echo '${{ env.ARTIFACT_REGISTRY }}'
   
