@@ -20,6 +20,12 @@ jobs:
         uses: 'google-github-actions/auth@v2'
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Debug
+        run: |
+          echo 'Debug hints: access_token
+          echo '${{ steps.auth.outputs.access_token }}'
+          echo '${{ env.ARTIFACT_REGISTRY }}'
   
       - name: Docker Auth
         id: docker-auth
