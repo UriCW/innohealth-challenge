@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model PatientRecord {
+  id                   Int      @id @default(autoincrement())
+  client_id            String
+  date_testing         DateTime
+  date_birthdate       DateTime
+  gender               Int
+  ethnicity            Int
+  creatine             Float
+  chloride             Float
+  fasting_glucose      Float
+  potassium            Float
+  sodium               Float
+  total_calcium        Float
+  total_protein        Float
+  creatine_unit        String
+  chloride_unit        String
+  fasting_glucose_unit String
+  potassium_unit       String
+  sodium_unit          String
+  total_calcium_unit   String
+  total_protein_unit   String
+}
