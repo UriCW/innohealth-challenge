@@ -1,7 +1,7 @@
 name: Build the innohealth microservice and push to repositor
 on:
   push:
-    branches: [ $default-branch ]
+    branches: [ main, master, $default-branch ]
 
 env:
   PROJECT_ID: innohealthexcercise
