@@ -23,9 +23,10 @@ jobs:
 
       - name: Debug
         run: |
-          echo 'Debug hints: access_token'
-          echo '${{ steps.auth.outputs.access_token }}'
-          echo '${{ env.ARTIFACT_REGISTRY }}'
+          echo 'Debug hints:'
+          echo 'step output ${{ steps.auth.output }}'
+          echo 'access token ${{ steps.auth.outputs.access_token }}'
+          echo 'registry ${{ env.ARTIFACT_REGISTRY }}'
   
       - name: Docker Auth
         id: docker-auth
