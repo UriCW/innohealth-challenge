@@ -1,0 +1,36 @@
+name: Build the innohealth microservice and push to repositor
+on:
+  push:
+    branches: [ $default-branch ]
+
+env:
+  PROJECT_ID: innohealthexcercise
+  ARTIFACT_REGISTRY: europe-southwest1-docker.pkg.dev
+  ARTIFACT: europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/service
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: 'actions/checkout@v4'
+
+      - name: Authenticate with Google Cloud
+        id: auth-gcp
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}''
+  
+      - name: Authenticate with Docker on GCP
+        id: docker-auth
+        uses: 'docker/login-action@v1'
+        with:
+          username: 'oauth2accesstoken'
+          password: '${{ steps.auth.outputs.access_token }}'
+          registry: '${{ env.ARTIFACT_REGISTRY }}'
+
+      - name: Build docker container
+        run: |
+          DOCKER_IMAGE="${ARTIFACT}:${ github.sha }"
+          docker build -t "${ DOCKER_IMAGE }" "./apps/patient_service/"
+          docker push "${ DOCKER_IMAGE }" "./apps/patient_service/"
