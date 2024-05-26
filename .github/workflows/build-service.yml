@@ -15,13 +15,13 @@ jobs:
       - name: Checkout
         uses: 'actions/checkout@v4'
 
-      - name: Authenticate with Google Cloud
+      - name: Google Auth
         id: auth-gcp
         uses: 'google-github-actions/auth@v0'
         with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}''
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
   
-      - name: Authenticate with Docker on GCP
+      - name: Docker Auth
         id: docker-auth
         uses: 'docker/login-action@v1'
         with:
