@@ -23,6 +23,13 @@ jobs:
       - name: Checkout
         uses: 'actions/checkout@v4'
 
+      - name: message
+        run: |
+          echo 'Debug hints:'
+          echo '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
+          echo '${{ env.SERVICE_ACCOUNT }}'
+
+
       - name: Google Auth
         id: auth
         uses: 'google-github-actions/auth@v2'
