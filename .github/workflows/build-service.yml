@@ -7,6 +7,11 @@ env:
   PROJECT_ID: innohealthexcercise
   ARTIFACT_REGISTRY: europe-southwest1-docker.pkg.dev
   ARTIFACT: europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/service
+  SERVICE_ACCOUNT: deployment-service@innohealthexcercise.iam.gserviceaccount.com
+  WORKLOAD_IDENTITY_PROVIDER: projects/1005508374984/locations/global/workloadIdentityPools/cicd-wip/providers/github
+
+
+
 
 jobs:
   build:
@@ -19,8 +24,9 @@ jobs:
         id: auth
         uses: 'google-github-actions/auth@v2'
         with:
-          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-          # token_format: 'access_token'
+          workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.SERVICE_ACCOUNT }}
+          token_format: 'access_token'
           export_environment_variables: true
 
       - name: Debug
