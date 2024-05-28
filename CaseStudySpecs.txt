@@ -41,7 +41,7 @@ Requirements
 4. ORM Tool:
     - Use Prisma as the ORM tool for database interactions.
     - Your submission should include a database schema
-    > TODO
+    > apps/patient_service/prisma/schema.prisma
 5. API Endpoint:
     - Expose a GET endpoint from the main application for frontend interaction.
     - The endpoint should return data for all patients in a single array, sorted by the 'date_testing' field.

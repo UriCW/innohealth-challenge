@@ -26,6 +26,8 @@ services:
     build: apps/patient_frontend
     ports:
       - 3001:3000
+    environment:
+      SERVICE_ENDPOINT: http://localhost:3000/all
     depends_on:
       - patient_service
 volumes:
