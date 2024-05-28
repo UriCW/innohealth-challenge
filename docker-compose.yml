@@ -21,10 +21,15 @@ services:
       DATABASE_URL: "postgresql://postgres:abc123@database:5432/innohealthdb?schema=public"
     depends_on:
       - database
+
   patient_frontend:
     container_name: innohealth-patient-frontend
     hostname: frontend
-    build: apps/patient_frontend
+    build:
+      context: apps/patient_frontend
+      args:
+        - SERVICE_ENDPOINT="http://service:3000/all"
+    # build: apps/patient_frontend
     ports:
       - 3000:3000
     environment:
