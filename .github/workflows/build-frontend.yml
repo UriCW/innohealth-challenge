@@ -1,0 +1,47 @@
+name: Build the innohealth frontend and push to repositor
+on:
+  push:
+    branches: [ main, master, $default-branch ]
+
+env:
+  PROJECT_ID: innohealthexcercise
+  ARTIFACT_REGISTRY: europe-southwest1-docker.pkg.dev
+  ARTIFACT: europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/frontend
+  SERVICE_ACCOUNT: deployment-service@innohealthexcercise.iam.gserviceaccount.com
+  WORKLOAD_IDENTITY_PROVIDER: projects/1005508374984/locations/global/workloadIdentityPools/cicd-wip/providers/github-provider
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    steps:
+      - name: Checkout
+        uses: 'actions/checkout@v4'
+
+      - name: Google Auth
+        id: auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: ${{ env.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ env.SERVICE_ACCOUNT }}
+          token_format: 'access_token'
+          export_environment_variables: true
+
+      - name: Docker Auth
+        id: docker-auth
+        uses: 'docker/login-action@v3'
+        with:
+          username: 'oauth2accesstoken'
+          password: '${{ steps.auth.outputs.access_token }}'
+          registry: '${{ env.ARTIFACT_REGISTRY }}'
+
+      - name: Build docker container
+        run: |
+          DOCKER_IMAGE="${{ env.ARTIFACT }}:${{ github.sha }}"
+          docker build -t "$DOCKER_IMAGE" "./apps/patient_frontend/"
+          docker push "$DOCKER_IMAGE"
+
+      - name: Deploy to Cloud Run
+        id: deploy
