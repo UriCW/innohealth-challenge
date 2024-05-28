@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "hack": "next build && next run"
+    "hack": "next build && next start"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
