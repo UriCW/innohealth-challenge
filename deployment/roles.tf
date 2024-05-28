@@ -45,15 +45,18 @@ resource "google_project_iam_member" "service-account-token-creator" {
   member = "serviceAccount:${google_service_account.deployment.email}"
 }
 
+resource "google_project_iam_member" "cloud-run-developer" {
+  project = var.project_name
+  role = "roles/run.developer"
+  member = "serviceAccount:${google_service_account.deployment.email}"
+}
+
 resource "google_service_account_iam_binding" "admin-account-iam" {
   service_account_id = google_service_account.deployment.name
   role               = "roles/iam.workloadIdentityUser"
 
   members = [
-    # "principalSet://iam.googleapis.com/projects/1005508374984/locations/global/workloadIdentityPools/cicd-wip/attribute.repository/UriCW/innohealth-challenge"
     "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.gitops_wip.name}/attribute.repository/${var.git_repo}"
-    #"principalSet://iam.googleapis.com/${WORKLOAD_IDENTITY_POOL_ID}/attribute.repository_owner/${ORG_NAME}"
-    #"user:jane@example.com",
   ]
 }
 
