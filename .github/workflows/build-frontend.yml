@@ -1,7 +1,7 @@
 name: Build the innohealth frontend and push to repositor
 on:
   push:
-    branches: [ main, master, $default-branch ]
+    branches: [ main, master, $default-branch, deployment ]
 
 env:
   PROJECT_ID: innohealthexcercise
