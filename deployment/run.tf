@@ -6,6 +6,9 @@ resource "google_cloud_run_v2_service" "biocomposition_service" {
   template {
     containers {
       image = "europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/bioservice"
+      ports {
+        container_port = 3000
+      }
     }
   }
 }

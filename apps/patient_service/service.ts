@@ -7,7 +7,7 @@ const app = express();
 let cache = apicache.middleware;
 app.use(cache("1 minutes"));
 
-const port = process.env.SERVICE_PORT || 3000;
+const port = process.env.SERVICE_PORT || 8080;
 const endpoint = process.env.ENDPOINT_URL || ""
 
 if (!endpoint){
