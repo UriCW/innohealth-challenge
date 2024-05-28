@@ -8,7 +8,7 @@ env:
   ARTIFACT_REGISTRY: europe-southwest1-docker.pkg.dev
   ARTIFACT: europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/biofrontend
   SERVICE_ACCOUNT: deployment-service@innohealthexcercise.iam.gserviceaccount.com
-  WORKLOAD_IDENTITY_PROVIDER: projects/1005508374984/locations/global/workloadIdentityPools/cicd-wip/providers/github-provider
+  WORKLOAD_IDENTITY_PROVIDER: projects/1005508374984/locations/global/workloadIdentityPools/gitops-wip/providers/github-provider
 
 jobs:
   build:
