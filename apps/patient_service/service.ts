@@ -15,6 +15,7 @@ if (!endpoint){
 }
 
 app.get("/update", async (_, response) => {
+  console.log("Updating records");
   updateRecords(endpoint).then(() => {
     response.send({ status: "SUCCESS", message: "Updated patient reading records on database" });
   });
@@ -23,6 +24,7 @@ app.get("/update", async (_, response) => {
 
 app.get("/all", async (_, response) => {
   const allRecords = await getAllRecords()
+  console.log("Getting all records");
   response.send(allRecords);
 });
 
