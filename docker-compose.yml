@@ -12,6 +12,7 @@ services:
 
   patient_service:
     container_name: innohealth-patient-service 
+    hostname: service
     build: apps/patient_service
     ports:
       - 3000:3000
@@ -27,7 +28,7 @@ services:
     ports:
       - 3001:3000
     environment:
-      SERVICE_ENDPOINT: http://localhost:3000/all
+      SERVICE_ENDPOINT: http://service:3000/all
     depends_on:
       - patient_service
 volumes:
