@@ -1,0 +1,76 @@
+Case Study
+Develop a Node.js application and a stateless microservice using TypeScript. The main application will utilize the microservice to fetch mock data from a public API, store it in a PostgreSQL database, and expose an endpoint for frontend interaction.
+
+Requirements
+1. Main Application and Microservice:
+    - Both the main application and the microservice should be written in TypeScript.
+    - The main application will use the microservice to fetch mock data from a public API.
+2. Data Retrieval:
+    - Use the provided Mock API to retrieve data for at least 10 patients. The API endpoint is: https://mockapi-furw4tenlq-ez.a.run.app/data.
+    - Note: Each API call generates a new dataset for one patient, which may contain a random number of observations, including potentially zero.
+3. Database Integration:
+    - Store the patients' data in a PostgreSQL database.
+    - Decide whether the database communication should occur in the main application or the microservice, and justify your decision.
+
+    > In MicroService - 
+    >   pros: 
+    >     - seems like it's the responsibility of the "patient records third party service" to maintain this.
+    >     - easier to scale.
+    >   cons:
+    >     - kinda breaks "stateless" requirement?!? maybe?
+    >     - 
+    > In main application - 
+    >   pros:
+    >     - Maybe easier to code
+    >   cons: 
+    >     - more exposed to user,
+    >     - probably harder to scale
+    > 
+    > If all we require is to pass through the response to a database, it makes sense to consider this a single responsibility
+    > Seems to make sense this should go in the service.
+    > 
+    > possibly, if "the application" need to process the response in more complicated ways, and is not expected to be high traffic
+    > it could make the implementation easier to maintain, maybe... this depends on the rest of the functionality, are there other databases? 
+    > do we often make DB transactions that combines tables? 
+    >
+    > Note, perhaps a better approach could be to have a dedicated database service and a frontend "main application"
+    > You can then scale that seperately from the application in production.
+    >
+    > Given the above, i chose to put it in the microservice.
+
+4. ORM Tool:
+    - Use Prisma as the ORM tool for database interactions.
+    - Your submission should include a database schema
+    > TODO
+5. API Endpoint:
+    - Expose a GET endpoint from the main application for frontend interaction.
+    - The endpoint should return data for all patients in a single array, sorted by the 'date_testing' field.
+6. Caching:
+    - Implement caching to optimize data retrieval and reduce redundant API calls.
+
+    > The mocking generate a new record in each request, this isn't ideal for caching. 
+    > in prod the record probably updates every some timespan 
+    > Implement caching on database as well (ensure postgres config is right)
+   
+
+
+7. Frontend Interaction:
+    - Include a public HTML page with a button to trigger the GET endpoint request.
+    - Display the received data using `console.log` or within a `<pre></pre>` tag.
+    - You may use Next.js or a static HTML page for this purpose.
+8. Dockerization:
+    - Dockerize your entire setup to ensure easy deployment and replication.
+9. Submission:
+    - Upload your completed solution to either GitHub or GitLab.
+    - Include a README file detailing the steps to replicate your setup locally.
+10. (Optional): Deploy your application to a cloud service offering a free tier to demonstrate its functionality in a live environment.
+
+Mock Data Details
+- The mock data is a time series representing patient information.
+- Each API call to https://mockapi-furw4tenlq-ez.a.run.app/data generates a new dataset for one patient.
+- Be aware that some API responses might contain only one or zero timepoints.
+
+Assumptions and Definitions
+If you are unsure about any aspect of the task that is not fully specified, you are encouraged to make an assumption and define how to proceed further yourself. This allows for flexibility and creativity in your implementation while demonstrating your problem-solving skills.
+
+> The data contains unit, it's not clear if these should be stored in the database. it's probably standard unit and should be encoded as quantity only. for the sake of this excercise i'll assume they are required.

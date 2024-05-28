@@ -45,3 +45,5 @@ jobs:
 
       - name: Deploy to Cloud Run
         id: deploy
+        run: |
+          echo "Not deploying frontend actually!"

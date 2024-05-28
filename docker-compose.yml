@@ -1,0 +1,32 @@
+services:
+  database:
+    container_name: innohealth-patient-database
+    hostname: databse
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: abc123
+    volumes:
+        - database_volume:/var/lib/postgresql/data
+
+  patient_service:
+    container_name: innohealth-patient-service 
+    build: apps/patient_service
+    ports:
+      - 3000:3000
+    environment:
+      ENDPOINT_URL: "https://mockapi-furw4tenlq-ez.a.run.app/data"
+      DATABASE_URL: "postgresql://postgres:abc123@database:5432/innohealthdb?schema=public"
+    depends_on:
+      - database
+  patient_frontend:
+    container_name: innohealth-patient-frontend
+    hostname: frontend
+    build: apps/patient_frontend
+    ports:
+      - 3001:3000
+    depends_on:
+      - patient_service
+volumes:
+  database_volume:
