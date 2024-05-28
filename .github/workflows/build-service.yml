@@ -39,9 +39,10 @@ jobs:
 
       - name: Build docker container
         run: |
-          DOCKER_IMAGE="${{ env.ARTIFACT }}:${{ github.sha }}"
-          docker build -t "$DOCKER_IMAGE" "./apps/patient_service/"
-          docker push "$DOCKER_IMAGE"
+          DOCKER_SHA_TAG="${{ env.ARTIFACT }}:${{ github.sha }}"
+          DOCKER_LATEST_TAG="${{ env.ARTIFACT }}:latest"
+          docker build -t "$DOCKER_SHA_TAG" -t "$DOCKER_LATEST_TAG" "./apps/patient_service/"
+          docker push "$DOCKER_SHA_TAG"
 
       - name: Deploy to Cloud Run
         id: deploy
