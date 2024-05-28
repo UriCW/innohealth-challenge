@@ -15,7 +15,7 @@ services:
     hostname: service
     build: apps/patient_service
     ports:
-      - 3000:3000
+      - 3001:3000
     environment:
       ENDPOINT_URL: "https://mockapi-furw4tenlq-ez.a.run.app/data"
       DATABASE_URL: "postgresql://postgres:abc123@database:5432/innohealthdb?schema=public"
@@ -26,7 +26,7 @@ services:
     hostname: frontend
     build: apps/patient_frontend
     ports:
-      - 3001:3000
+      - 3000:3000
     environment:
       SERVICE_ENDPOINT: http://service:3000/all
     depends_on:

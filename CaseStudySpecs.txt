@@ -73,4 +73,8 @@ Mock Data Details
 Assumptions and Definitions
 If you are unsure about any aspect of the task that is not fully specified, you are encouraged to make an assumption and define how to proceed further yourself. This allows for flexibility and creativity in your implementation while demonstrating your problem-solving skills.
 
+> Other Issues:
+
 > The data contains unit, it's not clear if these should be stored in the database. it's probably standard unit and should be encoded as quantity only. for the sake of this excercise i'll assume they are required.
+
+> Note: I don't actually know NextJS. I was facing a problem where `next build` failed when using `docker-compose build`, I believe it was due to relying on environment variable `SERVICE_ENDPOINT="http://.../all"` to define the service endpoint URL in the client side, and since the REST service endpoint was not running during docker-compose build time the build failed. I believe there is a nicer solution, possibly involving `getProps`, or some skip check options. However I used a hack and I am building the next js app during execution when the service is already running, this is not very elegant and I would have prefered a better solution.

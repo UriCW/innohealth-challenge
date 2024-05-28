@@ -16,10 +16,8 @@ The microservice contains a few symbolic tests
 ## Local
 
 You can deploy the application locally using `docker-compose up`, this should spin up a database and the two components of the application
-It will expose the service on `localhost:3001` and the service on `localhost:3000`
+It will expose the service on `localhost:3001` and the frontend on `localhost:3000`
 
-You can query the service directly by using `curl localhost:3000/all` and `curl localhost:3000/update`
-
-## Remote
-
+You can query the service directly by using `curl localhost:3001/all` and `curl localhost:3001/update`
+You can use the frontend by browsing to `localhost:3000/`
 
