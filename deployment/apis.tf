@@ -21,6 +21,7 @@ resource "google_project_service" "artifactregistry" {
 
 resource "google_project_service" "iamcredentials" {
   service = "iamcredentials.googleapis.com"
+  disable_dependent_services = true
 }
 
 resource "google_project_service" "iam" {

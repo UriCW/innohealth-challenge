@@ -20,13 +20,6 @@ jobs:
       - name: Checkout
         uses: 'actions/checkout@v4'
 
-      - name: message
-        run: |
-          echo 'Debug hints:'
-          echo '${{ env.WORKLOAD_IDENTITY_PROVIDER }}'
-          echo '${{ env.SERVICE_ACCOUNT }}'
-
-
       - name: Google Auth
         id: auth
         uses: 'google-github-actions/auth@v2'
@@ -36,13 +29,6 @@ jobs:
           token_format: 'access_token'
           export_environment_variables: true
 
-      - name: Debug
-        run: |
-          echo 'Debug hints:'
-          echo 'step output ${{ steps.auth.output }}'
-          echo 'access token ${{ steps.auth.outputs.access_token }}'
-          echo 'registry ${{ env.ARTIFACT_REGISTRY }}'
-  
       - name: Docker Auth
         id: docker-auth
         uses: 'docker/login-action@v3'
@@ -53,8 +39,9 @@ jobs:
 
       - name: Build docker container
         run: |
-          # echo ${{ steps.auth.outputs.access_token }} | docker login -u oauth2accesstoken --password-stdin https://${{ env.ARTIFACT_REGISTRY }}
           DOCKER_IMAGE="${{ env.ARTIFACT }}:${{ github.sha }}"
-          echo "Tagging with $DOCKER_IMAGE"
           docker build -t "$DOCKER_IMAGE" "./apps/patient_service/"
           docker push "$DOCKER_IMAGE"
+
+      - name: Deploy to Cloud Run
+        id: deploy

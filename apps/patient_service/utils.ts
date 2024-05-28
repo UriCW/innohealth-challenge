@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function updateRecords(endpoint: string) {
-  console.log("update() called");
+  console.log("updateRecords() called");
   const response = await axios.get(endpoint);
   for (var reading of response.data) {
     reading.date_testing = new Date(reading.date_testing);
