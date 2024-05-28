@@ -6,7 +6,7 @@ on:
 env:
   PROJECT_ID: innohealthexcercise
   ARTIFACT_REGISTRY: europe-southwest1-docker.pkg.dev
-  ARTIFACT: europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/service
+  ARTIFACT: europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/bioservice
   SERVICE_ACCOUNT: deployment-service@innohealthexcercise.iam.gserviceaccount.com
   WORKLOAD_IDENTITY_PROVIDER: projects/1005508374984/locations/global/workloadIdentityPools/cicd-wip/providers/github-provider
 

@@ -23,8 +23,8 @@ resource "google_artifact_registry_repository" "innohealth" {
   }
 }
 
-resource "google_iam_workload_identity_pool" "cicd_wip" {
-  workload_identity_pool_id = "cicd-wip"
+resource "google_iam_workload_identity_pool" "gitops_wip" {
+  workload_identity_pool_id = "gitops-wip"
   display_name              = "CICD Workload Identity Pool"
   description               = "Identity pool for CICD (GitOps)"
   disabled                  = false
@@ -33,7 +33,7 @@ resource "google_iam_workload_identity_pool" "cicd_wip" {
 }
 
 resource "google_iam_workload_identity_pool_provider" "github" {
-  workload_identity_pool_id = google_iam_workload_identity_pool.cicd_wip.workload_identity_pool_id
+  workload_identity_pool_id = google_iam_workload_identity_pool.gitops_wip.workload_identity_pool_id
   workload_identity_pool_provider_id = "github-provider"
   display_name = "Github"
   description = "Gitops Identity pool provider"

@@ -51,7 +51,7 @@ resource "google_service_account_iam_binding" "admin-account-iam" {
 
   members = [
     # "principalSet://iam.googleapis.com/projects/1005508374984/locations/global/workloadIdentityPools/cicd-wip/attribute.repository/UriCW/innohealth-challenge"
-    "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.cicd_wip.name}/attribute.repository/${var.git_repo}"
+    "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.gitops_wip.name}/attribute.repository/${var.git_repo}"
     #"principalSet://iam.googleapis.com/${WORKLOAD_IDENTITY_POOL_ID}/attribute.repository_owner/${ORG_NAME}"
     #"user:jane@example.com",
   ]
