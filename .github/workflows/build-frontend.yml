@@ -5,6 +5,8 @@ on:
 
 env:
   PROJECT_ID: innohealthexcercise
+  REGION: europe-southwest1
+  CLOUDRUN_SERVICE: biocomposition-frontend
   ARTIFACT_REGISTRY: europe-southwest1-docker.pkg.dev
   ARTIFACT: europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/biofrontend
   SERVICE_ACCOUNT: deployment-service@innohealthexcercise.iam.gserviceaccount.com
@@ -39,13 +41,19 @@ jobs:
 
       - name: Build docker container
         run: |
-          DOCKER_IMAGE="${{ env.ARTIFACT }}:${{ github.sha }}"
-          docker build -t "$DOCKER_IMAGE" "./apps/patient_frontend/"
+          DOCKER_SHA_TAG="${{ env.ARTIFACT }}:${{ github.sha }}"
+          DOCKER_LATEST_TAG="${{ env.ARTIFACT }}:latest"
+          docker build -t "$DOCKER_SHA_TAG" -t "$DOCKER_LATEST_TAG" "./apps/patient_frontend/"
           docker push "${{ env.ARTIFACT }}" --all-tags
-          #docker push "$DOCKER_IMAGE"
-
-
+          #docker push "$DOCKER_SHA_TAG"
       - name: Deploy to Cloud Run
         id: deploy
-        run: |
-          echo "Not deploying frontend actually!"
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.CLOUDRUN_SERVICE }}
+          region: ${{ env.REGION }}
+          image: ${{ env.ARTIFACT }}:${{ github.sha }}
+
+      # If required, use the Cloud Run url output in later steps
+      - name: Show Output
+        run: echo ${{ steps.deploy.outputs.url }}
