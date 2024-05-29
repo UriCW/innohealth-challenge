@@ -41,7 +41,9 @@ jobs:
         run: |
           DOCKER_IMAGE="${{ env.ARTIFACT }}:${{ github.sha }}"
           docker build -t "$DOCKER_IMAGE" "./apps/patient_frontend/"
-          docker push "$DOCKER_IMAGE"
+          docker push "${{ env.ARTIFACT }}" --all-tags
+          #docker push "$DOCKER_IMAGE"
+
 
       - name: Deploy to Cloud Run
         id: deploy

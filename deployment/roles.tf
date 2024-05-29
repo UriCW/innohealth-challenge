@@ -1,17 +1,26 @@
-# resource "google_service_account" "ais_listener" {
-#   account_id   = "ais-listener-service-account"
-#   description  = "A service account for the AIS Listener service."
-#   display_name = "AIS Listener Service Account"
-#   project      = var.project_name
-# }
-# 
-# resource "google_service_account" "ais_user" {
-#   account_id   = "ais-user-service-account"
-#   description  = "A service account for applications that use the AIS service endpoints or read from big query database, etc."
-#   display_name = "AIS User Service Account"
+# resource "google_service_account" "frontend" {
+#   account_id   = "frontend-service-account"
+#   description  = "A service account for the Frontend."
+#   display_name = "Biocomposition Frontend Service Account"
 #   project      = var.project_name
 # }
 
+resource "google_service_account" "service" {
+  account_id   = "bioservice-account"
+  description  = "A service account for the biocomposition service"
+  display_name = "Biocomposition Service Account"
+  project      = var.project_name
+}
+
+resource "google_project_iam_member" "cloudsql-client" {
+  project = var.project_name
+  role = "roles/cloudsql.client"
+  member = "serviceAccount:${google_service_account.service.email}"
+}
+
+
+
+# Deployment
 resource "google_service_account" "deployment" {
   account_id   = "deployment-service"
   description  = "A service that can push to artefact registry to update a docker image."

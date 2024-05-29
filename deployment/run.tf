@@ -15,7 +15,7 @@ resource "google_cloud_run_v2_service" "biocomposition_service" {
       }
       env {
         name = "DATABASE_URL"
-        value = "postgresql://user:password@localhost:5432/innohealthdb?host=/cloudsql/innohealthexcercise:europe-southwest1:patients"
+        value = "postgresql://<USER>:<PASSWORD>@localhost:5432/innohealthdb?host=/cloudsql/innohealthexcercise:europe-southwest1:patients"
       }
     }
   }
@@ -28,7 +28,18 @@ resource "google_cloud_run_v2_service" "biocomposition_frontend" {
 
   template {
     containers {
-      image = "europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/biofrontend"
+      # image = "europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/biofrontend"
+      image = "europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/biofrontend@latest"
     }
   }
 }
+
+resource "google_cloud_run_service_iam_binding" "frontend-invoker" {
+  location = google_cloud_run_v2_service.biocomposition_frontend.location
+  service  = google_cloud_run_v2_service.biocomposition_frontend.name
+  role     = "roles/run.invoker"
+  members = [
+    "allUsers"
+  ]
+}
+

@@ -11,9 +11,9 @@ resource "google_project_service" "computeapi" {
 #   service = "alloydb.googleapis.com"
 # }
 
-# resource "google_project_service" "servicenetworkingapi" {
-#   service = "servicenetworking.googleapis.com"
-# }
+resource "google_project_service" "servicenetworkingapi" {
+  service = "servicenetworking.googleapis.com"
+}
 
 resource "google_project_service" "artifactregistry" {
   service = "artifactregistry.googleapis.com"
@@ -34,4 +34,16 @@ resource "google_project_service" "run" {
 
 resource "google_project_service" "cloudresourcemanager" {
   service = "cloudresourcemanager.googleapis.com"
+}
+
+resource "google_project_service" "servicenetworking" {
+  service = "servicenetworking.googleapis.com"
+}
+
+resource "google_project_service" "sqladmin" {
+  service = "sqladmin.googleapis.com"
+}
+
+resource "google_project_service" "oslogin" {
+  service = "oslogin.googleapis.com"
 }

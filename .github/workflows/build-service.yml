@@ -44,7 +44,9 @@ jobs:
           DOCKER_SHA_TAG="${{ env.ARTIFACT }}:${{ github.sha }}"
           DOCKER_LATEST_TAG="${{ env.ARTIFACT }}:latest"
           docker build -t "$DOCKER_SHA_TAG" -t "$DOCKER_LATEST_TAG" "./apps/patient_service/"
-          docker push "$DOCKER_SHA_TAG"
+          docker push "${{ env.ARTIFACT }}" --all-tags
+
+          # docker push "$DOCKER_SHA_TAG"
 
       - name: Deploy to Cloud Run
         id: deploy
