@@ -1,9 +1,9 @@
-# resource "google_service_account" "frontend" {
-#   account_id   = "frontend-service-account"
-#   description  = "A service account for the Frontend."
-#   display_name = "Biocomposition Frontend Service Account"
-#   project      = var.project_name
-# }
+resource "google_service_account" "frontend" {
+  account_id   = "frontend-service-account"
+  description  = "A service account for the Frontend."
+  display_name = "Biocomposition Frontend Service Account"
+  project      = var.project_name
+}
 
 resource "google_service_account" "service" {
   account_id   = "bioservice-account"
@@ -68,4 +68,3 @@ resource "google_service_account_iam_binding" "admin-account-iam" {
     "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.gitops_wip.name}/attribute.repository/${var.git_repo}"
   ]
 }
-

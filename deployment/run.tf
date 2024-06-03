@@ -5,9 +5,13 @@ resource "google_cloud_run_v2_service" "biocomposition_service" {
 
   template {
     containers {
-      image = "europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/bioservice"
+      image = "europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/bioservice:latest"
+      volume_mounts {
+        name       = "cloudsql"
+        mount_path = "/cloudsql"
+      }
       ports {
-        container_port = 3000
+        container_port = 8080
       }
       env {
         name = "ENDPOINT_URL"
@@ -15,10 +19,19 @@ resource "google_cloud_run_v2_service" "biocomposition_service" {
       }
       env {
         name = "DATABASE_URL"
-        value = "postgresql://<USER>:<PASSWORD>@localhost:5432/innohealthdb?host=/cloudsql/innohealthexcercise:europe-southwest1:patients"
+        value = data.google_secret_manager_secret_version.latest.secret_data
+        # value = "postgresql://<USER>:<PASSWORD>@localhost:5432/innohealthdb?host=/cloudsql/innohealthexcercise:europe-southwest1:patients"
+      }
+    }
+    volumes {
+      name = "cloudsql"
+      cloud_sql_instance {
+      instances = [google_sql_database_instance.this.connection_name]
       }
     }
   }
+  client     = "terraform"
+  depends_on = [google_project_service.secretmanager, google_project_service.run, google_project_service.sqladmin]
 }
 
 resource "google_cloud_run_v2_service" "biocomposition_frontend" {
@@ -28,9 +41,13 @@ resource "google_cloud_run_v2_service" "biocomposition_frontend" {
 
   template {
     containers {
-      # image = "europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/biofrontend"
-      image = "europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/biofrontend@latest"
+      image = "europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/biofrontend:latest"
+      env {
+        name = "SERVICE_ENDPOINT"
+        value = "https://biocomposition-service-bupfcnw6ca-no.a.run.app/all"
+      }
     }
+    service_account = google_service_account.frontend.email
   }
 }
 
@@ -41,5 +58,31 @@ resource "google_cloud_run_service_iam_binding" "frontend-invoker" {
   members = [
     "allUsers"
   ]
+}
+
+# resource "google_cloud_run_service_iam_binding" "backend-service-invoker" {
+#   location = google_cloud_run_v2_service.biocomposition_service.location
+#   service  = google_cloud_run_v2_service.biocomposition_service.name
+#   role     = "roles/run.invoker"
+#   members = [
+#     "serviceAccount:${google_service_account.frontend.email}"
+#   ]
+# }
+
+data "google_iam_policy" "backend-invoker" {
+  binding {
+    role = "roles/run.invoker"
+    members = [
+      "serviceAccount:${google_service_account.frontend.email}"
+    ]
+  }
+}
+
+resource "google_cloud_run_service_iam_policy" "backend-invoker" {
+  location = google_cloud_run_v2_service.biocomposition_service.location
+  #  project  = google_cloud_run_v2_service.private.project
+  service  = google_cloud_run_v2_service.biocomposition_service.name
+
+  policy_data = data.google_iam_policy.backend-invoker.policy_data
 }
 

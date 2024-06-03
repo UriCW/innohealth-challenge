@@ -50,4 +50,26 @@ resource "google_iam_workload_identity_pool_provider" "github" {
   }
 }
 
+resource "google_secret_manager_secret" "connection_string" {
+  secret_id = "connection-string"
+  replication {
+    auto {}
+  }
+}
+# resource "google_secret_manager_secret" "database_connection_string" {
+#   provider = google-beta
+#   secret_id = "database-connection-string"
+#
+#   replication {
+#     auto {}
+#   }
+#
+#   depends_on = [google_project_service.secretmanager]
+# }
+data "google_secret_manager_secret_version" "latest" {
+  provider = google-beta # Use the beta provider for secret manager
+  secret   = google_secret_manager_secret.connection_string.name
+}
+
+
 data "google_project" "project" {}

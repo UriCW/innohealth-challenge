@@ -47,3 +47,7 @@ resource "google_project_service" "sqladmin" {
 resource "google_project_service" "oslogin" {
   service = "oslogin.googleapis.com"
 }
+
+resource "google_project_service" "secretmanager" {
+  service = "secretmanager.googleapis.com"
+}
