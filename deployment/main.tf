@@ -17,10 +17,6 @@ resource "google_artifact_registry_repository" "innohealth" {
   repository_id = "innohealth"
   description   = "Stores the docker images for the innohealth excercise"
   format        = "DOCKER"
-
-  docker_config {
-    immutable_tags = true
-  }
 }
 
 resource "google_iam_workload_identity_pool" "gitops_wip" {
@@ -56,16 +52,6 @@ resource "google_secret_manager_secret" "connection_string" {
     auto {}
   }
 }
-# resource "google_secret_manager_secret" "database_connection_string" {
-#   provider = google-beta
-#   secret_id = "database-connection-string"
-#
-#   replication {
-#     auto {}
-#   }
-#
-#   depends_on = [google_project_service.secretmanager]
-# }
 data "google_secret_manager_secret_version" "latest" {
   provider = google-beta # Use the beta provider for secret manager
   secret   = google_secret_manager_secret.connection_string.name

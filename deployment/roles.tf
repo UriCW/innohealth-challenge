@@ -68,3 +68,21 @@ resource "google_service_account_iam_binding" "admin-account-iam" {
     "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.gitops_wip.name}/attribute.repository/${var.git_repo}"
   ]
 }
+
+resource "google_cloud_run_service_iam_binding" "frontend-invoker" {
+  location = google_cloud_run_v2_service.biocomposition_frontend.location
+  service  = google_cloud_run_v2_service.biocomposition_frontend.name
+  role     = "roles/run.invoker"
+  members = [
+    "allUsers"
+  ]
+}
+
+resource "google_cloud_run_service_iam_binding" "backend-service-invoker" {
+  location = google_cloud_run_v2_service.biocomposition_service.location
+  service  = google_cloud_run_v2_service.biocomposition_service.name
+  role     = "roles/run.invoker"
+  members = [
+    "serviceAccount:${google_service_account.frontend.email}"
+  ]
+}

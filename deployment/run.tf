@@ -43,51 +43,18 @@ resource "google_cloud_run_v2_service" "biocomposition_frontend" {
     containers {
       image = "europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/biofrontend:latest"
       env {
-        # Should come from config here for testing
         name = "SERVICE_ENDPOINT"
-        value = "https://biocomposition-service-bupfcnw6ca-no.a.run.app/all"
+        # value = "https://biocomposition-service-bupfcnw6ca-no.a.run.app/all"
+        value = "${google_cloud_run_v2_service.biocomposition_service.uri}/all"
+
+
       }
       env {
-        # Should come from config here for testing
-        NAME = "TARGET_AUDIENCE"
-        value = "https://biocomposition-service-bupfcnw6ca-no.a.run.app"
+        name = "TARGET_AUDIENCE"
+        # value = "https://biocomposition-service-bupfcnw6ca-no.a.run.app"
+        value = google_cloud_run_v2_service.biocomposition_service.uri
       }
     }
     service_account = google_service_account.frontend.email
   }
 }
-
-resource "google_cloud_run_service_iam_binding" "frontend-invoker" {
-  location = google_cloud_run_v2_service.biocomposition_frontend.location
-  service  = google_cloud_run_v2_service.biocomposition_frontend.name
-  role     = "roles/run.invoker"
-  members = [
-    "allUsers"
-  ]
-}
-
-resource "google_cloud_run_service_iam_binding" "backend-service-invoker" {
-  location = google_cloud_run_v2_service.biocomposition_service.location
-  service  = google_cloud_run_v2_service.biocomposition_service.name
-  role     = "roles/run.invoker"
-  members = [
-    "serviceAccount:${google_service_account.frontend.email}"
-  ]
-}
-
-# data "google_iam_policy" "backend-invoker" {
-#   binding {
-#     role = "roles/run.invoker"
-#     members = [
-#       "serviceAccount:${google_service_account.frontend.email}"
-#     ]
-#   }
-# }
-# 
-# resource "google_cloud_run_service_iam_policy" "backend-invoker" {
-#   location = google_cloud_run_v2_service.biocomposition_service.location
-#   #  project  = google_cloud_run_v2_service.private.project
-#   service  = google_cloud_run_v2_service.biocomposition_service.name
-# 
-#   policy_data = data.google_iam_policy.backend-invoker.policy_data
-# }
