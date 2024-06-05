@@ -1,5 +1,17 @@
 name: Build the innohealth frontend and push to repositor
 on:
+
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'Builds, push and deploy the frontend'
+
+  # Dependency to a forking workflow
+  workflow_run:
+    workflows: ["Run tests"]
+    type:
+      - complete
+
   push:
     branches: [ main, master, $default-branch, deployment ]
 

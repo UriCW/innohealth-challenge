@@ -1,5 +1,18 @@
 name: Build the innohealth microservice and push to repositor
 on:
+
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'Builds, push and deploy service'
+
+  # Dependency to a forking workflow
+  workflow_run:
+    workflows: ["Run tests"]
+    type:
+      - complete
+
+
   push:
     branches: [ main, master, $default-branch, deployment ]
 
