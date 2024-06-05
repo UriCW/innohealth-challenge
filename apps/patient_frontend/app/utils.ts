@@ -11,3 +11,6 @@ export async function getIdentityToken(){
   console.log(clientHeaders)
   return clientHeaders
 }
+
+export async function getHeaders() {
+}
