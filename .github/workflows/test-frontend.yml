@@ -5,7 +5,6 @@ on:
 
 jobs:
   test-frontend:
-    # needs: [root_frontend_test]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -13,7 +12,6 @@ jobs:
     strategy:
       matrix:
         node-version: [21.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
     - uses: actions/checkout@v4
 
