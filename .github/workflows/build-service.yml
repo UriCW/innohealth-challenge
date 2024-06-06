@@ -1,14 +1,17 @@
 name: Build and deploy service
+# on:
+# 
+#   workflow_dispatch:
+#     inputs:
+#       message:
+#         description: 'Builds, push and deploy service'
+# 
+#   pull_request_review:
+#     types: [submitted]
+#     branches: [$default-branch]
+
 on:
-
-  workflow_dispatch:
-    inputs:
-      message:
-        description: 'Builds, push and deploy service'
-
-  pull_request_review:
-    types: [submitted]
-    branches: [$default-branch]
+  workflow_call:
 
 env:
   PROJECT_ID: innohealthexcercise

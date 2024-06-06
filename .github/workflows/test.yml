@@ -1,9 +1,9 @@
 name: Root tests
 
 #Required for linting
-permissions:
-  checks: write
-  contents: write
+# permissions:
+#   checks: write
+#   contents: write
 
 on:
   push:
