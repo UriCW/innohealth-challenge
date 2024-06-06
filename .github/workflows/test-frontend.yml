@@ -1,0 +1,33 @@
+name: Test Service
+
+on:
+  workflow_call:
+
+jobs:
+  test-frontend:
+    # needs: [root_frontend_test]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/patient_frontend
+    strategy:
+      matrix:
+        node-version: [21.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: '**/package-lock.json'
+
+    - name: Install dependencies
+      run: |
+          npm ci
+          npm run build --if-present
+
+    - name: Test
+      run: npm test

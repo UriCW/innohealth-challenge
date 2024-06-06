@@ -1,4 +1,4 @@
-name: Build the innohealth microservice and push to repositor
+name: Build and deploy service
 on:
 
   workflow_dispatch:
@@ -6,16 +6,9 @@ on:
       message:
         description: 'Builds, push and deploy service'
 
-  # Dependency to a forking workflow
-  workflow_run:
-    workflows: ["Run tests"]
-    type:
-      - complete
-    branches:
-      - main
-      - master
-      - $default-branch
-      - deployment
+  pull_request_review:
+    types: [submitted]
+    branches: [$default-branch]
 
 env:
   PROJECT_ID: innohealthexcercise
@@ -28,6 +21,7 @@ env:
 
 jobs:
   build:
+    if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
