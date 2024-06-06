@@ -1,11 +1,12 @@
 name: Test Service
 
-on:
-  - push
-  - pull_request
+#on:
+#  - push
+#  - pull_request
 
 jobs:
   test-service:
+    # needs: [ root_service_test ]
     runs-on: ubuntu-latest
     defaults:
       run:

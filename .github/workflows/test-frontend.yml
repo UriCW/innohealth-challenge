@@ -6,7 +6,7 @@ name: Test Service
 
 jobs:
   test-frontend:
-    needs: [root_frontend_test]
+    # needs: [root_frontend_test]
     runs-on: ubuntu-latest
     defaults:
       run:
