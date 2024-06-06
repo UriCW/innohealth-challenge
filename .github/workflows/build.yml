@@ -1,7 +1,7 @@
 name: Root build 
 
 on:
-  pull_request:
+  push:
     branches:
       - $default-branch
 jobs:
@@ -9,8 +9,6 @@ jobs:
     steps:
       - run: echo "I'm just  a dummy step"
   deploy-service:
-    if: github.event.pull_request.merged == true
     uses: ./.github/workflows/build-service.yml
   deploy-frontend:
-    if: github.event.pull_request.merged == true
     uses: ./.github/workflows/test-frontend.yml
