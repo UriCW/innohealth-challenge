@@ -1,0 +1,27 @@
+name: Root tests
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  trigger_service_test:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'opened')
+    steps:
+      - name: Trigger Service Test Workflow
+        uses: actions/trigger-workflow@v2
+        with:
+          workflow: test-service.yml
+
+  trigger_frontend_test:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action == 'opened')
+    steps:
+      - name: Trigger Frontend Test Workflow
+        uses: actions/trigger-workflow@v2
+        with:
+          workflow: test-frontend.yml
