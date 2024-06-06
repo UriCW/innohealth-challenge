@@ -13,9 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
-      working-directory: apps/patient_service
       uses: actions/setup-node@v3
       with:
+        working-directory: apps/patient_service
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
 
@@ -36,7 +36,7 @@ jobs:
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
-        working-directory: apps/patient_service
+        working-directory: apps/patient_frontend
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
 
