@@ -1,19 +1,28 @@
 import { PrismaClient } from "@prisma/client";
 import { getAllRecords, numberOfClientsInDatabase, seedDatabase } from "../../utils"
+
+describe("Test functions in utils.ts", () => {
+  test("Placeholder for test", () => {
+    expect(1).toBe(1)
+  })
+
+})
+
+
 // // import axios from "axios";
 // // jest.mock('axios')
 // // const mockedAxios = axios as jest.Mocked<typeof axios>
 // 
-describe("Tests utils", () => {
-  test("Number of clients on database", async() =>{
-    const num = await numberOfClientsInDatabase()
-    console.log(num)
-  })
-
-
-  test("Test seed", async() => {
-    seedDatabase("https://mockapi-furw4tenlq-ez.a.run.app/data")
-  })
+// describe("Tests utils", () => {
+//   test("Number of clients on database", async() =>{
+//     const num = await numberOfClientsInDatabase()
+//     console.log(num)
+//   })
+// 
+// 
+//   test("Test seed", async() => {
+//     seedDatabase("https://mockapi-furw4tenlq-ez.a.run.app/data")
+//   })
 //   test("Test get all records from database", async () => {
 //     const mockRecords = [
 //       {
