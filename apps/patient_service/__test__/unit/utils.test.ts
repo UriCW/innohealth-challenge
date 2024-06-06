@@ -1,14 +1,10 @@
-import { PrismaClient } from "@prisma/client";
-import { getAllRecords, numberOfClientsInDatabase, seedDatabase } from "../../utils"
-
+// import { PrismaClient } from "@prisma/client";
+// import { getAllRecords, numberOfClientsInDatabase, seedDatabase } from "../../utils"
 describe("Test functions in utils.ts", () => {
   test("Placeholder for test", () => {
     expect(1).toBe(1)
   })
-
 })
-
-
 // // import axios from "axios";
 // // jest.mock('axios')
 // // const mockedAxios = axios as jest.Mocked<typeof axios>
