@@ -5,8 +5,12 @@ on:
     branches:
       - $default-branch
 jobs:
-  test-service:
+  dummy:
+    steps:
+      run: echo "I'm just  a dummy step"
+  deploy-service:
     if: github.event.pull_request.merged == true
     uses: ./.github/workflows/build-service.yml
-  #  test-frontend:
-  #    uses: ./.github/workflows/test-frontend.yml
+  deploy-frontend:
+    if: github.event.pull_request.merged == true
+    uses: ./.github/workflows/test-frontend.yml
