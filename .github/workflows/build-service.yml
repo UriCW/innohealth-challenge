@@ -1,7 +1,21 @@
 name: Build the innohealth microservice and push to repositor
 on:
-  push:
-    branches: [ main, master, $default-branch, deployment ]
+
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'Builds, push and deploy service'
+
+  # Dependency to a forking workflow
+  workflow_run:
+    workflows: ["Run tests"]
+    type:
+      - complete
+    branches:
+      - main
+      - master
+      - $default-branch
+      - deployment
 
 env:
   PROJECT_ID: innohealthexcercise
@@ -44,7 +58,8 @@ jobs:
           DOCKER_SHA_TAG="${{ env.ARTIFACT }}:${{ github.sha }}"
           DOCKER_LATEST_TAG="${{ env.ARTIFACT }}:latest"
           docker build -t "$DOCKER_SHA_TAG" -t "$DOCKER_LATEST_TAG" "./apps/patient_service/"
-          docker push "$DOCKER_SHA_TAG"
+          docker push "${{ env.ARTIFACT }}" --all-tags
+          #docker push "$DOCKER_SHA_TAG"
 
       - name: Deploy to Cloud Run
         id: deploy
@@ -52,7 +67,6 @@ jobs:
         with:
           service: ${{ env.CLOUDRUN_SERVICE }}
           region: ${{ env.REGION }}
-          # NOTE: If using a pre-built image, update the image name here
           image: ${{ env.ARTIFACT }}:${{ github.sha }}
 
       # If required, use the Cloud Run url output in later steps
