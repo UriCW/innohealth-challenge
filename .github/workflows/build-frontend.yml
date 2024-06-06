@@ -26,6 +26,9 @@ env:
 
 jobs:
   build:
+    needs:
+      - test-service
+      - test-frontend
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
