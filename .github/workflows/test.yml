@@ -9,8 +9,10 @@ on:
 
 jobs:
   test-service:
-    steps:
-      - uses: ./.github/workflows/test-service.yml
+    - uses: ./.github/workflows/test-service.yml
+    
+    #  steps:
+    #  - uses: ./.github/workflows/test-service.yml
   #  test-frontend:
   #    uses: ./.github/workflows/test-frontend.yml
     #    runs-on: ubuntu-latest

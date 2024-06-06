@@ -3,6 +3,8 @@ name: Test Service
 #on:
 #  - push
 #  - pull_request
+on:
+  workflow_call:
 
 jobs:
   test-service:
