@@ -9,7 +9,7 @@ on:
 
 jobs:
   test-service:
-    uses: ./.github/workflows/test-service.yml
+    uses: UriCW/innohealth-challenge/.github/workflows/test-service.yml@deploy
     
     #  steps:
     #  - uses: ./.github/workflows/test-service.yml
