@@ -6,9 +6,6 @@ name: Root tests
 #   contents: write
 
 on:
-  push:
-    branches:
-      - '*'
   pull_request:
     branches:
       - '*'
