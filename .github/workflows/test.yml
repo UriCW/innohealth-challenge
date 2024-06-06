@@ -15,5 +15,5 @@ on:
 jobs:
   test-service:
     uses: UriCW/innohealth-challenge/.github/workflows/test-service.yml@deployment
-  #  test-frontend:
-  #    uses: ./.github/workflows/test-frontend.yml
+  test-frontend:
+    uses: ./.github/workflows/test-frontend.yml

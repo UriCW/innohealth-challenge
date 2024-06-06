@@ -3,10 +3,6 @@ name: Test Service
 on:
   workflow_call:
 
-permissions:
-  checks: write
-  contents: write
-
 jobs:
   test-service:
     # needs: [ root_service_test ]
@@ -32,15 +28,6 @@ jobs:
       run: |
           npm ci
           npm run build --if-present
-
-    - name: Lint Service
-      uses: AntonKornus/TypeScript-Linter@1.0.0
-
-      #- name: Lint
-      #  uses: super-linter/super-linter@v6.6.0  # x-release-please-version
-      #  env:
-      #    # To report GitHub Actions status checks
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Test
       run: npm test
