@@ -11,8 +11,6 @@ on:
     workflows: ["Run tests"]
     type:
       - complete
-
-  push:
     branches: [ main, master, $default-branch, deployment ]
 
 env:
@@ -26,9 +24,6 @@ env:
 
 jobs:
   build:
-    needs:
-      - test-service
-      - test-frontend
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
