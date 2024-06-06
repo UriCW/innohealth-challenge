@@ -6,7 +6,6 @@ on:
   pull_request:
     branches:
       - '*'
-
 jobs:
   test-service:
     uses: UriCW/innohealth-challenge/.github/workflows/test-service.yml@deployment
