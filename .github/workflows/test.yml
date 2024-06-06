@@ -9,7 +9,7 @@ on:
 
 jobs:
   test-service:
-    - uses: ./.github/workflows/test-service.yml
+    uses: ./.github/workflows/test-service.yml
     
     #  steps:
     #  - uses: ./.github/workflows/test-service.yml
