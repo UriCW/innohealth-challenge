@@ -2,7 +2,7 @@
 
 [![Super-Linter](https://github.com/UriCW/innohealth-challenge/actions/workflows/test-service.yml/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
-[![Super-Linter](https://github.com/<OWNER>/innohealth-challenge/actions/workflows/test-frontend.yml/badge.svg)](https://github.com/marketplace/actions/super-linter)
+[![Super-Linter](https://github.com/UriCW/innohealth-challenge/actions/workflows/test-frontend.yml/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
 
 
