@@ -7,7 +7,7 @@ on:
 jobs:
   dummy:
     steps:
-      run: echo "I'm just  a dummy step"
+      - run: echo "I'm just  a dummy step"
   deploy-service:
     if: github.event.pull_request.merged == true
     uses: ./.github/workflows/build-service.yml
