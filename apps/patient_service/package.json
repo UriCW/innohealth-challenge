@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "start:compose" : "npx prisma db push && ts-node service.ts",
+    "start:compose": "npx prisma db push && ts-node service.ts",
     "start": "ts-node service.ts",
     "test": "jest"
   },
