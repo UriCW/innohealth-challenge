@@ -1,6 +1,6 @@
 # Innohealth Challenge
 
-A demonstration of an application stack to perform a simple REST operations through frontend
+A demonstration of an application stack to perform a simple REST operations through frontend.
 This was originally a simple demonstration of microservice for a job application.
 It's now a bit of a playground for DevOp setups.
 
