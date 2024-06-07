@@ -13,7 +13,7 @@ provider "google" {
 }
 
 resource "google_artifact_registry_repository" "innohealth" {
-  location      = "europe-southwest1"
+  location      = var.region
   repository_id = "innohealth"
   description   = "Stores the docker images for the innohealth excercise"
   format        = "DOCKER"
@@ -34,7 +34,9 @@ resource "google_iam_workload_identity_pool_provider" "github" {
   display_name = "Github"
   description = "Gitops Identity pool provider"
   disabled = false
-  attribute_condition = "assertion.repository=='UriCW/innohealth-challenge'"
+  attribute_condition = "assertion.repository=='${var.git_repo}'"
+  # attribute_condition = "assertion.repository=='UriCW/innohealth-challenge'"
+  # This could be hardened
   attribute_mapping  = {
     "attribute.actor" = "assertion.actor"
     "google.subject" = "assertion.sub"
@@ -53,7 +55,7 @@ resource "google_secret_manager_secret" "connection_string" {
   }
 }
 data "google_secret_manager_secret_version" "latest" {
-  provider = google-beta # Use the beta provider for secret manager
+  provider = google-beta
   secret   = google_secret_manager_secret.connection_string.name
 }
 

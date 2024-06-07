@@ -1,13 +1,16 @@
 # Innohealth Challenge
 
 A demonstration of an application stack to perform a simple REST operations through frontend
+This was originally a simple demonstration of microservice for a job application.
+It's now a bit of a playground for DevOp setups.
 
 # Strucutre
+
 The application is actually two applications, a microservice and a fontend, each with their own Dockerfile.
 these reside in `apps/patient_service` and `apps/patient_frontend`
 
 The resources required to deploy this application on Google Cloud are defined in `deployment/` using terraform.
-A github CI is defined in .github/workflows/ 
+A github CI is defined in .github/workflows/
 
 The microservice contains a few symbolic tests
 
@@ -21,3 +24,23 @@ It will expose the service on `localhost:3001` and the frontend on `localhost:30
 You can query the service directly by using `curl localhost:3001/all` and `curl localhost:3001/update`
 You can use the frontend by browsing to `localhost:3000/`
 
+## Google Cloud
+
+1. Setup resources
+
+```bash
+terraform deploy
+```
+
+You will need to set a few variables,
+`project_name`, the GCP project to deploy at is the only required one if you are happy with the defaults.
+`region` will default to "europe-southwest1"
+`github_repo` is this repo and you probably shouldn't change this unless you fork this project for some reason.
+
+This will create a load of resources, you will need to set a connection string in Google Secret Manager
+`connection-string`, and it should be in the format of
+`postgresql://<USER>:<PASSWORD>@localhost:5432/innohealthdb?host=/cloudsql/<PROJECT_NAME>:<REGION>:patients`
+This will allow the backend service to connect to the Database.
+
+You also have to configure the database credentials manually on GCP.
+I may move those to terraform variables later for easier setup.

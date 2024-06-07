@@ -15,7 +15,7 @@ resource "google_cloud_run_v2_service" "biocomposition_service" {
       }
       env {
         name = "ENDPOINT_URL"
-        value = "https://mockapi-furw4tenlq-ez.a.run.app/data"
+        value = var.mock_endpoint
       }
       env {
         name = "DATABASE_URL"
