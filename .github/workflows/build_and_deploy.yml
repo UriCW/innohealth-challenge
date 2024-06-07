@@ -12,7 +12,13 @@ jobs:
       - run: echo "I'm just a dummy step"
 
   deploy-service:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
     uses: ./.github/workflows/build-service.yml
 
   deploy-frontend:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
     uses: ./.github/workflows/test-frontend.yml
