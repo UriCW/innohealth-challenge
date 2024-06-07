@@ -66,4 +66,7 @@ docker push europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/bios
 cd ../patient_frontend
 docker build . --tag europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/biofrontend:latest
 docker push europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/biofrontend:latest
+
+gcloud run deploy biocomposition-service --image europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/bioservice:latest
+gcloud run deploy biocomposition-frontend --image europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/biofrontend:latest
 ```
