@@ -1,14 +1,26 @@
 name: Root build 
 
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - $default-branch
+
 jobs:
   dummy:
     steps:
-      - run: echo "I'm just  a dummy step"
+      - run: echo "I'm just a dummy step, I will run regardless of a merge"
+
+  dummy-merge:
+    if: github.event.pull_request.merged == true
+    steps:
+      - run: echo "I'm just a dummy step, I will run on a merge"
+
   deploy-service:
+    if: github.event.pull_request.merged == true
     uses: ./.github/workflows/build-service.yml
+
   deploy-frontend:
+    if: github.event.pull_request.merged == true
     uses: ./.github/workflows/test-frontend.yml
