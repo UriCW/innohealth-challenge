@@ -62,4 +62,8 @@ Then You need to push them and deploy the two cloud run instances with those ima
 cd apps/patient_service
 docker build . --tag europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/bioservice:latest
 docker push europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/bioservice:latest
+
+cd ../patient_frontend
+docker build . --tag europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/biofrontend:latest
+docker push europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/biofrontend:latest
 ```
