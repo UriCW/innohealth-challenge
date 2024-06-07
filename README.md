@@ -53,4 +53,9 @@ Deployment is taken care of using github action workflows, specifically build.ym
 `./.github/workflows/build-service.yml` and
 `./.github/workflows/build-frontend.yml`. on a PR merge.
 
-You can build, push and deploy the images manually
+You can build, push and deploy the images manually. 
+You need to build the docker images of the frontend and the backend, 
+tagging them to the corrsponding artifact registry docker repository.
+Then You need to push them and deploy the two cloud run instances with those images
+
+
