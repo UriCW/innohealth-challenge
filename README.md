@@ -26,7 +26,9 @@ You can use the frontend by browsing to `localhost:3000/`
 
 ## Google Cloud
 
-1. Setup resources
+You will need to setup gcloud and terraform and docker.
+
+1. Create resources on Google Cloud
 
 ```bash
 terraform deploy
@@ -37,10 +39,18 @@ You will need to set a few variables,
 `region` will default to "europe-southwest1"
 `github_repo` is this repo and you probably shouldn't change this unless you fork this project for some reason.
 
-This will create a load of resources, you will need to set a connection string in Google Secret Manager
+This will create a bunch of resources, you will need to set a connection string in Google Secret Manager
 `connection-string`, and it should be in the format of
 `postgresql://<USER>:<PASSWORD>@localhost:5432/innohealthdb?host=/cloudsql/<PROJECT_NAME>:<REGION>:patients`
 This will allow the backend service to connect to the Database.
 
 You also have to configure the database credentials manually on GCP.
 I may move those to terraform variables later for easier setup.
+
+## Deploy
+
+Deployment is taken care of using github action workflows, specifically build.yml, which triggers  
+`./.github/workflows/build-service.yml` and
+`./.github/workflows/build-frontend.yml`. on a PR merge.
+
+You can build, push and deploy the images manually
