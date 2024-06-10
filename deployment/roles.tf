@@ -86,3 +86,17 @@ resource "google_cloud_run_service_iam_binding" "backend-service-invoker" {
     "serviceAccount:${google_service_account.frontend.email}"
   ]
 }
+
+resource "google_secret_manager_secret_iam_member" "auth0_secret" {
+  secret_id = google_secret_manager_secret.auth0_secret.id
+  role      = "roles/secretmanager.secretAccessor"
+  member     = "serviceAccount:${google_service_account.frontend.email}"
+  depends_on = [google_secret_manager_secret.auth0_secret]
+}
+
+resource "google_secret_manager_secret_iam_member" "auth0_client_secret" {
+  secret_id = google_secret_manager_secret.auth0_client_secret.id
+  role      = "roles/secretmanager.secretAccessor"
+  member     = "serviceAccount:${google_service_account.frontend.email}"
+  depends_on = [google_secret_manager_secret.auth0_client_secret]
+}

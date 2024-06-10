@@ -17,6 +17,10 @@ resource "google_cloud_run_v2_service" "biocomposition_service" {
         name = "ENDPOINT_URL"
         value = var.mock_endpoint
       }
+
+      # This is not optimal
+      # https://cloud.google.com/run/docs/configuring/services/secrets#terraform
+      # Secrets should be mounted as volume, currently this is visible in run configs
       env {
         name = "DATABASE_URL"
         value = data.google_secret_manager_secret_version.latest.secret_data
@@ -46,13 +50,44 @@ resource "google_cloud_run_v2_service" "biocomposition_frontend" {
         name = "SERVICE_ENDPOINT"
         # value = "https://biocomposition-service-bupfcnw6ca-no.a.run.app/all"
         value = "${google_cloud_run_v2_service.biocomposition_service.uri}/all"
-
-
       }
       env {
         name = "TARGET_AUDIENCE"
         # value = "https://biocomposition-service-bupfcnw6ca-no.a.run.app"
         value = google_cloud_run_v2_service.biocomposition_service.uri
+      }
+
+      env {
+        name = "AUTH0_SECRET"
+        value_source {
+          secret_key_ref {
+            secret  = google_secret_manager_secret.auth0_secret.secret_id
+            version = "latest"
+          }
+        }
+      }
+
+      env {
+        name = "AUTH0_CLIENT_SECRET"
+        value_source {
+          secret_key_ref {
+            secret  = google_secret_manager_secret.auth0_client_secret.secret_id
+            version = "latest"
+          }
+        }
+      }
+      env {
+        name = "AUTH0_BASE_URL"
+        value = "TO SET IN RUN CONFIG AFTER RESOURCE IS CREATED OR WHEN HAVE DOMAIN"
+
+      }
+      env {
+        name = "AUTH0_ISSUER_BASE_URL"
+        value = "TO SET IN RUN CONFIG AFTER RESOURCE IS CREATED"
+      }
+      env {
+        name = "AUTH0_CLIENT_ID"
+        value = "TO SET IN RUN CONFIG AFTER RESOURCE IS CREATED"
       }
     }
     service_account = google_service_account.frontend.email
