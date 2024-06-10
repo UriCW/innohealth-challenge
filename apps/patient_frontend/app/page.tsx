@@ -17,7 +17,6 @@ const home = () => {
     return <button onClick={getReadings}>Get All Records</button>;
   }
   return (
-    <h1> Not logged in </h1>,
     <a href="/api/auth/login">Login</a>
   );
 };
