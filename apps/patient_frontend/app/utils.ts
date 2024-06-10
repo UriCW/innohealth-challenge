@@ -2,7 +2,8 @@ import { GoogleAuth } from 'google-auth-library'
 
 export async function getIdentityToken(){
   if (!process.env.TARGET_AUDIENCE){
-    throw Error("Environment variable TARGET_AUDIENCE must be set to get google identity token");
+    console.warn("Environment variable TARGET_AUDIENCE must be set to get google identity token");
+    return {}
   }
 
   const auth = new GoogleAuth();
