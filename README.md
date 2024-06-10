@@ -24,6 +24,8 @@ It will expose the service on `localhost:3001` and the frontend on `localhost:30
 You can query the service directly by using `curl localhost:3001/all` and `curl localhost:3001/update`
 You can use the frontend by browsing to `localhost:3000/`
 
+If docker-compose complains ports 3000, 3001 or 5432 are in use already, use `lsof -i :<PORT NUMBER>` to diagnose the issue and stop any running postgres instance, or change the port in the docker-compose.yml.
+
 ## Google Cloud
 
 You will need to setup gcloud and terraform and docker.
