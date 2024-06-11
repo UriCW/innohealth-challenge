@@ -14,7 +14,13 @@ const home = () => {
       const ret = await response.json();
       console.log(ret);
     };
-    return <button onClick={getReadings}>Get All Records</button>;
+    return (
+      <div id="content">
+        <a href="/api/auth/logout"> Logout </a>
+        <br/>
+        <button onClick={getReadings}>Get All Records</button>
+      </div>
+    );
   }
   return (
     <a href="/api/auth/login">Login</a>
