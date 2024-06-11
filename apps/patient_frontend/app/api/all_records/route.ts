@@ -8,6 +8,7 @@ export async function GET(req: NextRequest) {
   try {
     console.log("url", req.url);
     const authHeaders = await getIdentityToken();
+    console.log(authHeaders)
     const response = await fetch(endpoint, {
       headers: authHeaders,
       next: { revalidate: 60 },
