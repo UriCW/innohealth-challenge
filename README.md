@@ -30,7 +30,7 @@ If docker-compose complains ports 3000, 3001 or 5432 are in use already, use `ls
 
 You will need to setup gcloud and terraform and docker.
 
-1. Create resources on Google Cloud
+### Create resources on Google Cloud
 
 ```bash
 terraform deploy
@@ -49,7 +49,7 @@ This will allow the backend service to connect to the Database.
 You also have to configure the database credentials manually on GCP.
 I may move those to terraform variables later for easier setup.
 
-## Deploy
+### Deploy
 
 Deployment is taken care of using github action workflows, specifically build.yml, which triggers  
 `./.github/workflows/build-service.yml` and
@@ -72,3 +72,20 @@ docker push europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/biof
 gcloud run deploy biocomposition-service --image europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/bioservice:latest
 gcloud run deploy biocomposition-frontend --image europe-southwest1-docker.pkg.dev/innohealthexcercise/innohealth/biofrontend:latest
 ```
+
+
+After that, you need to set a few variables and secrets in the Cloud Run configurations
+#### For the biocomposition-service
+`ENDPOINT_URL` defines the address to get the mock data from (https://mockapi-furw4tenlq-ez.a.run.app/data)
+`DATABASE_URL` defines the database connection string, see above
+
+#### For the biocomposition-service
+`SERVICE_ENDPOINT` defines the address GCP gives for the biocomposition-service /all,
+    for example `https://biocomposition-service-abcdefghij-no.a.run.app/all`
+`TARGET_AUDIENCE` is used by service account to get an access token to the backend service, should be
+    `https://biocomposition-service-abcdefghij-no.a.run.app`
+
+You also need to define some variables for Auth0, specifically
+`AUTH0_BASE_URL`, `AUTH0_ISSUER_BASE_URL` and `AUTH0_CLIENT_ID`
+As well as the secrets in secret manager `AUTH0_SECRET` and `AUTH0_CLIENT_SECRET`
+
