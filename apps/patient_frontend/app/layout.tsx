@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+// import "./globals.css";
 import React from "react";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 
@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html>
-      <UserProvider loginUrl="/api/auth/login" profileUrl="/api/auth/me">
+      <UserProvider>
         <body className={inter.className}>
           <h1> BioComposition </h1>
           {children}
