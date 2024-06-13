@@ -17,14 +17,15 @@ resource "google_cloud_run_v2_service" "biocomposition_service" {
         name = "ENDPOINT_URL"
         value = var.mock_endpoint
       }
-
-      # This is not optimal
-      # https://cloud.google.com/run/docs/configuring/services/secrets#terraform
-      # Secrets should be mounted as volume, currently this is visible in run configs
       env {
         name = "DATABASE_URL"
-        value = data.google_secret_manager_secret_version.latest.secret_data
         # value = "postgresql://<USER>:<PASSWORD>@localhost:5432/innohealthdb?host=/cloudsql/innohealthexcercise:europe-southwest1:patients"
+        value_source {
+          secret_key_ref {
+            secret  = google_secret_manager_secret.connection_string.secret_id
+            version = "latest"
+          }
+        }
       }
     }
     volumes {
@@ -33,6 +34,7 @@ resource "google_cloud_run_v2_service" "biocomposition_service" {
       instances = [google_sql_database_instance.this.connection_name]
       }
     }
+    service_account = google_service_account.service.email
   }
   client     = "terraform"
   depends_on = [google_project_service.secretmanager, google_project_service.run, google_project_service.sqladmin]

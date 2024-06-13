@@ -87,6 +87,13 @@ resource "google_cloud_run_service_iam_binding" "backend-service-invoker" {
   ]
 }
 
+resource "google_secret_manager_secret_iam_member" "connection_string" {
+  secret_id = google_secret_manager_secret.connection_string.id
+  role      = "roles/secretmanager.secretAccessor"
+  member     = "serviceAccount:${google_service_account.service.email}"
+  depends_on = [google_secret_manager_secret.connection_string]
+}
+
 resource "google_secret_manager_secret_iam_member" "auth0_secret" {
   secret_id = google_secret_manager_secret.auth0_secret.id
   role      = "roles/secretmanager.secretAccessor"

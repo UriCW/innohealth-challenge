@@ -10,7 +10,7 @@ variable "region" {
 
 variable "git_repo" {
   type = string
-  default = "UriCW/innohealth-challenge"
+  default = "UriCW/inohealth-challenge"
   description = "A github repository"
 }
 

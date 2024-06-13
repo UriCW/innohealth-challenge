@@ -48,39 +48,4 @@ resource "google_iam_workload_identity_pool_provider" "github" {
   }
 }
 
-resource "google_secret_manager_secret" "connection_string" {
-  secret_id = "connection-string"
-  replication {
-    auto {}
-  }
-}
-
-resource "google_secret_manager_secret" "auth0_secret" {
-  secret_id = "auth0-secret"
-  replication {
-    auto {}
-  }
-}
-resource "google_secret_manager_secret_version" "auth0_secret" {
-  secret      = google_secret_manager_secret.auth0_secret.name
-  secret_data = "this is secret data"
-}
-
-resource "google_secret_manager_secret" "auth0_client_secret" {
-  secret_id = "auth0-client-secret"
-  replication {
-    auto {}
-  }
-}
-resource "google_secret_manager_secret_version" "auth0_client_secret" {
-  secret      = google_secret_manager_secret.auth0_client_secret.name
-  secret_data = "this is secret data"
-}
-
-data "google_secret_manager_secret_version" "latest" {
-  provider = google-beta
-  secret   = google_secret_manager_secret.connection_string.name
-}
-
-
 data "google_project" "project" {}
